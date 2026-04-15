@@ -1,8 +1,9 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma";
-import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "./env";
+import { CLIENT_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "./env";
 import { waitUntil } from "@vercel/functions";
+import { sendEmail } from "./mail";
 
 
 export const auth = betterAuth({
@@ -29,7 +30,29 @@ export const auth = betterAuth({
         enabled:true,
         requireEmailVerification:true,
         sendResetPassword: async ({user, url, token}, request) => {
-            waitUntil()
+            waitUntil(
+                sendEmail({
+                    to:user.email,
+                    subject:'Reset your password',
+                    text: `Click the link to reset your password: ${url}`
+                })
+            )
         }
-    }
+    },
+    emailVerification: {
+        sendVerificationEmail: async ({user, url, token}, request) => {
+            const verificationUrl = `${CLIENT_URL}/verify-email?token=${token}`
+            waitUntil(
+                sendEmail({
+                    to:user.email,
+                    subject:'Verify your eamil',
+                    text:`Click the link to verify your email: ${verificationUrl}`
+                })
+            )
+        },
+        sendOnSignIn:true,
+        sendOnSignUp:true,
+        autoSignInAfterVerification:true
+    },
+    trustedOrigins:[CLIENT_URL!]
 });
