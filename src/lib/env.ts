@@ -1,0 +1,20 @@
+import "dotenv/config"
+
+export const {
+    PORT,
+    DATABASE_URL,
+    DIRECT_URL,
+    CLIENT_URL,
+    DEMO_ADMIN_EMAILS,
+    STRIPE_SECRET_KEY,
+    STRIPE_WEBHOOK_SECRET,
+    R2_ENDPOINT,
+    R2_ACCESS_KEY,
+    R2_SECRET_ACCESS_KEY,
+    R2_BUCKET_NAME,
+    R2_SIGNED_URL_EXPIRY_HOUR,
+    EMAIL,
+    EMAIL_APP_PASS,
+    GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET
+} = process.env
