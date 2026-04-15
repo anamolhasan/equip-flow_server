@@ -1,10 +1,11 @@
 import app from './app';
-import config from './config';
+import { PORT } from './lib/env';
+// import config from './config';
 
 async function main() {
   try {
-    app.listen(config.port, () => {
-      console.log(`Example app listening on port <%= config.port %>`);
+    app.listen(PORT, () => {
+      console.log(`Example app listening on http://localhost:${PORT}`);
     });
   } catch (err) {
     console.log(err);
