@@ -1,4 +1,4 @@
-import { auth } from './src/lib/auth'
+import { auth } from "./src/lib/auth";
 
 declare global {
     namespace Express {
@@ -7,4 +7,4 @@ declare global {
             session: typeof auth.$Infer.Session.session;
         }
     }
-} 
+}   
